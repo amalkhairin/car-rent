@@ -13,12 +13,12 @@ import lombok.*;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String name;
-    Integer price;
-    Boolean availability;
+    private Integer id;
+    private String name;
+    private Integer price;
+    private Boolean available;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
-    Brand brand;
+    private Brand brand;
 }

@@ -13,7 +13,7 @@ import lombok.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String name;
-    Integer balance;
+    private Integer id;
+    private String name;
+    private Integer balance;
 }
