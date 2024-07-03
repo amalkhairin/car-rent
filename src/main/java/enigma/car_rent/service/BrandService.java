@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BrandService {
     Brand create(Brand req);
-    Page<Brand> getAll(Pageable pageable);
+    Page<Brand> getAll(Pageable pageable, String name);
     Brand getOne(Integer id);
     Brand update(Integer id, Brand req);
     void delete(Integer id);

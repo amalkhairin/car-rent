@@ -2,6 +2,7 @@ package enigma.car_rent.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -31,6 +32,7 @@ public class Rent {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;

@@ -3,7 +3,7 @@ package enigma.car_rent.controller;
 import enigma.car_rent.model.Rent;
 import enigma.car_rent.service.RentService;
 import enigma.car_rent.utils.PageResponseWrapper;
-import enigma.car_rent.utils.RentDTO;
+import enigma.car_rent.utils.dto.RentDTO;
 import enigma.car_rent.utils.Res;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,8 +12,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/rent")

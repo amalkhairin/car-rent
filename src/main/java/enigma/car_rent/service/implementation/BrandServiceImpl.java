@@ -4,9 +4,11 @@ import enigma.car_rent.model.Brand;
 import enigma.car_rent.model.User;
 import enigma.car_rent.repository.BrandRepository;
 import enigma.car_rent.service.BrandService;
+import enigma.car_rent.utils.specification.BrandSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,13 +25,14 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public Page<Brand> getAll(Pageable pageable) {
-        return brandRepository.findAll(pageable);
+    public Page<Brand> getAll(Pageable pageable, String name) {
+        Specification<Brand> specification = BrandSpecification.getSpecification(name);
+        return brandRepository.findAll(specification, pageable);
     }
 
     @Override
     public Brand getOne(Integer id) {
-        return brandRepository.findById(id).orElse(null);
+        return brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Brand with id " + id + " not found"));
     }
 
     @Override

@@ -2,27 +2,28 @@ package enigma.car_rent.controller;
 
 import enigma.car_rent.model.Car;
 import enigma.car_rent.service.CarService;
-import enigma.car_rent.utils.CarDTO;
+import enigma.car_rent.utils.dto.CarDTO;
 import enigma.car_rent.utils.PageResponseWrapper;
 import enigma.car_rent.utils.Res;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/cars")
 @RequiredArgsConstructor
+@Validated
 public class CarController {
     private final CarService carService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CarDTO request) {
+    public ResponseEntity<?> create(@Valid @RequestBody CarDTO request) {
         return Res.renderJson(
                 carService.create(request),
                 "Car successfully created",
@@ -32,9 +33,11 @@ public class CarController {
 
     @GetMapping
     public ResponseEntity<?> getAll(
-            @PageableDefault(size = 10)Pageable pageable
+            @PageableDefault(size = 10)Pageable pageable,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Boolean available
             ) {
-        Page<Car> cars = carService.getAll(pageable);
+        Page<Car> cars = carService.getAll(pageable, name, available);
         PageResponseWrapper<Car> result = new PageResponseWrapper<>(cars);
         return Res.renderJson(
                 result,

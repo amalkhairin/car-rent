@@ -31,9 +31,10 @@ public class BrandController {
 
     @GetMapping
     public ResponseEntity<?> getAll(
-            @PageableDefault(size = 10)Pageable pageable
+            @PageableDefault(size = 10)Pageable pageable,
+            @RequestParam(required = false) String name
             ) {
-        Page<Brand> brands = brandService.getAll(pageable);
+        Page<Brand> brands = brandService.getAll(pageable, name);
         PageResponseWrapper<Brand> result = new PageResponseWrapper<>(brands);
         return Res.renderJson(
                 result,

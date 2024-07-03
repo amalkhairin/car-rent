@@ -7,7 +7,7 @@ import enigma.car_rent.repository.RentRepository;
 import enigma.car_rent.service.CarService;
 import enigma.car_rent.service.RentService;
 import enigma.car_rent.service.UserService;
-import enigma.car_rent.utils.RentDTO;
+import enigma.car_rent.utils.dto.RentDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -56,7 +55,7 @@ public class RentServiceImpl implements RentService {
 
     @Override
     public Rent getOne(Integer id) {
-        return rentRepository.findById(id).orElse(null);
+        return rentRepository.findById(id).orElseThrow(() -> new RuntimeException("Rent with id " + id + " not found"));
     }
 
     @Override

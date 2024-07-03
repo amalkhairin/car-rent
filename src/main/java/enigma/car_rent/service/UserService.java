@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
     User create(User req);
-    Page<User> getAll(Pageable pageable);
+    Page<User> getAll(Pageable pageable, String name);
     User getOne(Integer id);
     User update(Integer id, User req);
     void delete(Integer id);
