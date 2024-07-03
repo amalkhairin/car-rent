@@ -23,7 +23,7 @@ public class Car {
     private Integer price;
     private Boolean available;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
