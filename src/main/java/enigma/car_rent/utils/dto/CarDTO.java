@@ -13,10 +13,8 @@ public class CarDTO {
     @NotNull
     private Integer brand_id;
     @NotBlank
-    @NotNull
     private String name;
     @NotNull
     private Integer price;
-    @NotNull
     private Boolean available;
 }
