@@ -35,9 +35,6 @@ public class RentServiceImpl implements RentService {
 
         User user = userService.getOne(req.getUser_id());
 
-        if (user.getBalance() < car.getPrice()) {
-            throw new RuntimeException("User does not have enough balance");
-        }
 
         Rent rent = Rent.builder()
                 .car(car)
@@ -47,6 +44,11 @@ public class RentServiceImpl implements RentService {
                 .ends_at(LocalDate.parse(req.getEnds_at(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .build();
         car.setAvailable(false);
+
+        if (user.getBalance() < rent.getPrice()) {
+            throw new RuntimeException("User does not have enough balance");
+        }
+
         carService.updateAvailable(car.getId(), false);
 
         Integer daysBetween = (int) (ChronoUnit.DAYS.between(rent.getStarted_at(), rent.getEnds_at()));
