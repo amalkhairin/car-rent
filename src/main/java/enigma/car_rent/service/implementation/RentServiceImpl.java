@@ -28,7 +28,17 @@ public class RentServiceImpl implements RentService {
     @Override
     public Rent create(RentDTO req) {
         Car car = carService.getOne(req.getCar_id());
+
+        if (!car.getAvailable()) {
+            throw new RuntimeException("Car is not available");
+        }
+
         User user = userService.getOne(req.getUser_id());
+
+        if (user.getBalance() < car.getPrice()) {
+            throw new RuntimeException("User does not have enough balance");
+        }
+
         Rent rent = Rent.builder()
                 .car(car)
                 .user(user)
