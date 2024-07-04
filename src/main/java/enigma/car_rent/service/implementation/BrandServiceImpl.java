@@ -1,7 +1,6 @@
 package enigma.car_rent.service.implementation;
 
 import enigma.car_rent.model.Brand;
-import enigma.car_rent.model.User;
 import enigma.car_rent.repository.BrandRepository;
 import enigma.car_rent.service.BrandService;
 import enigma.car_rent.utils.specification.BrandSpecification;
@@ -10,10 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-@Repository
+@Service
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
     private final BrandRepository brandRepository;

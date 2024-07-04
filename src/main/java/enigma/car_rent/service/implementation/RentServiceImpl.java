@@ -2,7 +2,7 @@ package enigma.car_rent.service.implementation;
 
 import enigma.car_rent.model.Car;
 import enigma.car_rent.model.Rent;
-import enigma.car_rent.model.User;
+import enigma.car_rent.model.UserEntity;
 import enigma.car_rent.repository.RentRepository;
 import enigma.car_rent.service.CarService;
 import enigma.car_rent.service.RentService;
@@ -33,20 +33,20 @@ public class RentServiceImpl implements RentService {
             throw new RuntimeException("Car is not available");
         }
 
-        User user = userService.getOne(req.getUser_id());
+        UserEntity userEntity = userService.getOne(req.getUser_id());
 
 
         Rent rent = Rent.builder()
                 .car(car)
-                .user(user)
+                .userEntity(userEntity)
                 .price(car.getPrice())
                 .started_at(LocalDate.parse(req.getStarted_at(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .ends_at(LocalDate.parse(req.getEnds_at(), DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .build();
         car.setAvailable(false);
 
-        if (user.getBalance() < rent.getPrice()) {
-            throw new RuntimeException("User does not have enough balance");
+        if (userEntity.getBalance() < rent.getPrice()) {
+            throw new RuntimeException("UserEntity does not have enough balance");
         }
 
         carService.updateAvailable(car.getId(), false);
@@ -55,8 +55,8 @@ public class RentServiceImpl implements RentService {
         rent.setPrice(daysBetween * car.getPrice());
         rent.setCompleted(false);
 
-        user.setBalance(user.getBalance() - rent.getPrice());
-        userService.updateBalance(user.getId(), user);
+        userEntity.setBalance(userEntity.getBalance() - rent.getPrice());
+        userService.updateBalance(userEntity.getId(), userEntity);
         return rentRepository.save(rent);
     }
 
@@ -74,14 +74,14 @@ public class RentServiceImpl implements RentService {
     public Rent rentCompleted(Integer id) {
         Rent rent = this.getOne(id);
         rent.setCompleted(true);
-        User user = userService.getOne(rent.getUser().getId());
+        UserEntity userEntity = userService.getOne(rent.getUserEntity().getId());
 
         if (LocalDate.now().isAfter(rent.getEnds_at())) {
             Integer daysBetween = (int) (ChronoUnit.DAYS.between(rent.getEnds_at(), LocalDate.now()));
-            user.setBalance((int) ((user.getBalance() - (rent.getPrice() * 0.1)) * daysBetween));
+            userEntity.setBalance((int) ((userEntity.getBalance() - (rent.getPrice() * 0.1)) * daysBetween));
         }
 
-        userService.updateBalance(user.getId(), user);
+        userService.updateBalance(userEntity.getId(), userEntity);
         carService.updateAvailable(rent.getCar().getId(), true);
         return rentRepository.save(rent);
     }

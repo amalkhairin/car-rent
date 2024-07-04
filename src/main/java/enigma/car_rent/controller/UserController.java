@@ -1,6 +1,6 @@
 package enigma.car_rent.controller;
 
-import enigma.car_rent.model.User;
+import enigma.car_rent.model.UserEntity;
 import enigma.car_rent.service.UserService;
 import enigma.car_rent.utils.PageResponseWrapper;
 import enigma.car_rent.utils.Res;
@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -21,10 +19,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody User request) {
+    public ResponseEntity<?> create(@RequestBody UserEntity request) {
         return Res.renderJson(
                 userService.create(request),
-                "User successfully created",
+                "UserEntity successfully created",
                 HttpStatus.CREATED
         );
     }
@@ -34,8 +32,8 @@ public class UserController {
             @PageableDefault(size = 10)Pageable pageable,
             @RequestParam(required = false) String name
             ) {
-        Page<User> users = userService.getAll(pageable, name);
-        PageResponseWrapper<User> result = new PageResponseWrapper<>(users);
+        Page<UserEntity> users = userService.getAll(pageable, name);
+        PageResponseWrapper<UserEntity> result = new PageResponseWrapper<>(users);
         return Res.renderJson(
                 result,
                 "success",
@@ -53,10 +51,10 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody User request) {
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody UserEntity request) {
         return Res.renderJson(
                 userService.update(id, request),
-                "User successfully updated",
+                "UserEntity successfully updated",
                 HttpStatus.OK
         );
     }
@@ -66,13 +64,13 @@ public class UserController {
         userService.delete(id);
         return Res.renderJson(
                 "",
-                "User deleted",
+                "UserEntity deleted",
                 HttpStatus.OK
         );
     }
 
     @PutMapping("/{id}/topup")
-    public ResponseEntity<?> updateBalance(@PathVariable Integer id, @RequestBody User req) {
+    public ResponseEntity<?> updateBalance(@PathVariable Integer id, @RequestBody UserEntity req) {
         return Res.renderJson(
                 userService.topUp(id, req),
                 "Topup successfully",

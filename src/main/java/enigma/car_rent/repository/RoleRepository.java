@@ -1,6 +1,6 @@
 package enigma.car_rent.repository;
 
-import enigma.car_rent.model.UserEntity;
+import enigma.car_rent.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Integer>, JpaSpecificationExecutor<UserEntity> {
-    Optional<UserEntity> findByUsername(String name);
-
-    Boolean existsByName(String name);
+public interface RoleRepository extends JpaRepository<Role, Integer>, JpaSpecificationExecutor<Role> {
+    Optional<Role> findByName(String name);
 }
