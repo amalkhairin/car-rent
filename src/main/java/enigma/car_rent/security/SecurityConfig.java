@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -32,7 +33,12 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(
                 (authorize) -> authorize
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers("/auth/register").permitAll()
+//                        .requestMatchers("/users/update").hasRole("ADMIN")
+                        .requestMatchers(new AntPathRequestMatcher("/users/update/**")).hasRole("ADMIN")
+//                        .requestMatchers("/**/delete").hasRole("ADMIN")
+//                        .requestMatchers("/**/delete/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
 
         )

@@ -8,6 +8,7 @@ import enigma.car_rent.service.RoleService;
 import enigma.car_rent.service.UserService;
 import enigma.car_rent.utils.dto.AuthDTO;
 import enigma.car_rent.utils.dto.AuthResponseDTO;
+import enigma.car_rent.utils.dto.ResetPasswordDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

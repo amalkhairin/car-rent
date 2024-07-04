@@ -25,6 +25,7 @@ public class UserEntity {
     private Integer balance;
 
     private String username;
+    @JsonIgnore
     private String password;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
