@@ -11,6 +11,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.security.SignatureException;
+
 @RestControllerAdvice
 public class ErrorController {
     @ExceptionHandler(ConstraintViolationException.class)
@@ -50,7 +52,15 @@ public class ErrorController {
         return Res.renderJson(
                 null,
                 e.getMessage(),
-                HttpStatus.BAD_REQUEST);
+                HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<?> signatureException(SignatureException e) {
+        return Res.renderJson(
+                null,
+                e.getMessage(),
+                HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(RuntimeException.class)

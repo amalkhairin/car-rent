@@ -1,5 +1,6 @@
 package enigma.car_rent.utils.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @AllArgsConstructor
@@ -10,6 +11,7 @@ import lombok.*;
 @Builder
 public class AuthResponseDTO {
     private String accessToken;
+    @JsonIgnore
     private String tokenType = "Bearer ";
 
     public AuthResponseDTO(String accessToken) {
